@@ -38,6 +38,14 @@ let printing_params = {
       length: 0
     }
   },
+  purge: {
+      x: 0,
+      y: 0,
+      z: 0,
+      dip: 0,
+      length: 0,
+      cycles: 0
+  },
   initial_height: 0,
   z_lift_height: 0,
   speed: 0,
@@ -54,6 +62,13 @@ let printing_params = {
     this.liquid.B.y = parseFloat(document.getElementById("load_b_y").value);
     this.liquid.B.z = parseFloat(document.getElementById("load_b_z").value);
     this.liquid.B.dip = parseFloat(document.getElementById("load_b_dip").value);
+
+    this.purge.x = parseFloat(document.getElementById("purge_x").value);
+    this.purge.y = parseFloat(document.getElementById("purge_y").value);
+    this.purge.z = parseFloat(document.getElementById("purge_z").value);
+    this.purge.dip = parseFloat(document.getElementById("purge_dip").value);
+    this.purge.length = parseFloat(document.getElementById("purge_length").value);
+    this.purge.cycles = parseFloat(document.getElementById("purge_cycles").value);
 
     this.initial_height = parseFloat(document.getElementById("initial_height").value);
     this.z_lift_height = parseFloat(document.getElementById("z_lift_height").value);

@@ -21,7 +21,7 @@ function two_colors_matrix() {
 	for(let i = 0; i < design_params.row_num; i++) {
 
 		for(let j = 0; j < design_params.column_num; j++) {
-			console.log( "row = " + i + ", column =" + j + "Point x = " + p.x + ", y = " + p.y);
+			//console.log( "row = " + i + ", column =" + j + "Point x = " + p.x + ", y = " + p.y);
 
 			// Safe one point to A next to B
 			if (change_color) {

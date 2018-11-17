@@ -14,6 +14,7 @@ function handle_liquid(liquid, load) {
 	if(load) {
 		// Load liquid
 		loading_length = design_params.droplet_size * (design_params.row_num*design_params.column_num/2) + 1;  	// Three is a super random extra loaded liquid just in case
+		
 		gc += "G92 E"+ Math.round(loading_length*100)/100 +"\n";
 		// Retract load liquid
 		gc += "G1 E0 F"+ printing_params.e_speed + "\n";
@@ -35,6 +36,24 @@ function handle_liquid(liquid, load) {
 	// Undip nozzle
 	gc += "G1 Z"+ liquid.z + " F"+ printing_params.speed + "\n";	
 
+	return gc;
+}
+
+function purge() {
+	var gc = [];
+
+	gc += "G1 X" + printing_params.purge.x + " Y" + printing_params.purge.y + " Z" + printing_params.purge.z + " F"+ printing_params.speed+ "\n";
+
+	//Dip
+	gc += "G1 Z" + printing_params.purge.dip + " F"+ printing_params.speed+ "\n";
+
+	for (var i = 0; i < printing_params.purge.cycles; i++) {
+		gc += "G92 E0 \n";
+		gc += "G1 E-" + Math.round(printing_params.purge.length*100)/100 + " F"+ printing_params.e_speed + "\n";	
+		gc += "G4 P500 \n";
+		gc += "G1 E0 F"+ printing_params.e_speed + "\n";
+		gc += "G4 P500 \n";
+	}
 	return gc;
 }
 
@@ -87,6 +106,8 @@ function build_gcode(){
 	gcode += "; UNLOADING #A \n";
 	gcode += handle_liquid(printing_params.liquid.A, false);
 
+	gcode += purge();
+
 	// Load #B
 	gcode += "; LOADING #B \n";
 	gcode += handle_liquid(printing_params.liquid.B, true);
@@ -99,6 +120,7 @@ function build_gcode(){
 	gcode += "; UNLOADING #B \n";
 	gcode += handle_liquid(printing_params.liquid.B, false);
 
+	gcode += purge();
 
 
 	// End gcode homing printer
@@ -132,6 +154,13 @@ var params = [];
   params += "; Load #B Y [mm]: " + document.getElementById("load_b_y").value + "\n";
   params += "; Load #B Z [mm]: " + document.getElementById("load_b_z").value + "\n";
   params += "; Load #B DIP [mm]: " + document.getElementById("load_b_dip").value + "\n";  
+
+  params += "; Purge X [mm]: " + document.getElementById("purge_x").value + "\n";
+  params += "; Purge Y [mm]: " + document.getElementById("purge_y").value + "\n";
+  params += "; Purge Z [mm]: " + document.getElementById("purge_z").value + "\n";
+  params += "; Purge DIP [mm]: " + document.getElementById("purge_dip").value + "\n"; 
+  params += "; Purge length [mm]: " + document.getElementById("purge_length").value + "\n";
+  params += "; Purge cycles [mm]: " + document.getElementById("purge_cycles").value + "\n";
 
   params += "; Initial height [mm]: " + document.getElementById("initial_height").value + "\n";
   params += "; Z lift height [mm]: " + document.getElementById("z_lift_height").value + "\n";
