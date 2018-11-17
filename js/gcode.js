@@ -13,14 +13,20 @@ function handle_liquid(liquid, load) {
 
 	if(load) {
 		// Load liquid
-		loading_length = liquid.length + 3;  	// Three is a super random extra loaded liquid just in case
+		loading_length = design_params.droplet_size * (design_params.row_num*design_params.column_num/2) + 1;  	// Three is a super random extra loaded liquid just in case
 		gc += "G92 E"+ Math.round(loading_length*100)/100 +"\n";
 		// Retract load liquid
-		gc += "G1 E0 F"+ printing_params.e_speed + "\n";	
+		gc += "G1 E0 F"+ printing_params.e_speed + "\n";
+		gc += "G4 P3000 \n";
+
+		gc += "G1 E0.5 F"+ printing_params.e_speed + "\n";
+		gc += "G92 E0 \n";
+		gc += "G4 P3000 \n";
+
 	} else {
 		// Unload liquid
 		gc += "G92 E0 \n";
-		loading_length = 5;  	// Three is a super random extra loaded liquid just in case
+		loading_length = 0.5;//design_params.droplet_size * (design_params.row_num*design_params.column_num/2);  	// Three is a super random extra loaded liquid just in case
 		// Retract load liquid
 		gc += "G1 E" + Math.round(loading_length*100)/100 + " F"+ printing_params.e_speed + "\n";		
 	}
@@ -34,7 +40,7 @@ function handle_liquid(liquid, load) {
 
 function printing_color(color) {
 
-	let extrusion = 0;
+	let extrusion = design_params.droplet_size; // First droplet double side
 	var gc = [];
 
 	gc += "G92 E0 \n";
@@ -43,9 +49,9 @@ function printing_color(color) {
 		// Got to droplet point
 		gc += "G1 X"+ color[i].x + 
 		" Y"+ color[i].y + 
-		" Z"+ printing_params.initial_height + 
 		" F"+ printing_params.speed+ "\n";
 
+		gc += "G1 Z" + printing_params.initial_height + " F"+ printing_params.z_lift_speed + "\n";
 		// Extrude
 		extrusion += design_params.droplet_size;
 
