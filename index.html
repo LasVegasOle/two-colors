@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>TWO COLORS</title>
+		<link rel="stylesheet" href="./css/styles.css">
+		<script type="text/javascript" src="./js/lib/FileSaver.js"></script>
+	</head>
+
+	<body>
+	  	<div id="params">
+		<form>
+			<label class="field design" for="row_num">Number of rows [<em>#</em>]:</label>
+			<input type ="number" class="inputs" id="row_num" value="2"/>
+
+			<label class="field design" for="column_num">Number of columns [<em>#</em>]:</label>
+			<input type ="number" class="inputs" id="column_num" value="3"/>
+
+			<label class="field design" for="spacing">Spacing [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="spacing" value="20"/>
+
+			<label class="field design" for="droplet_mm">Droplet size [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="droplet_mm" value="0.2"/>
+
+			<button id="gcode" type="button" onclick="create_file();">PRINT</button>
+			
+			<label class= field printing">LIQUID #A</label>
+			<label class="field printing" for="load_a_x">Liquid X: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_a_x" value="35"/>
+
+			<label class="field printing" for="load_a_y">Liquid Y: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_a_y" value="-80"/>
+
+			<label class="field printing" for="load_a_z">Liquid Z: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_a_z" value="35"/>
+
+			<label class="field printing" for="load_a_dip">Dip: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_a_dip" value="15"/>
+
+			<label class= field printing">LIQUID #B</label>
+			<label class="field printing" for="load_b_x">Liquid X: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_b_x" value="-35"/>
+
+			<label class="field printing" for="load_b_y">Liquid Y: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_b_y" value="-80"/>
+
+			<label class="field printing" for="load_b_z">Liquid Z: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_b_z" value="35"/>
+
+			<label class="field printing" for="load_b_dip">Dip: [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="load_b_dip" value="15"/>
+
+			<label class="field printing" for="initial_height">Initial height [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="initial_height" value="5"/>
+
+
+			<label class="field printing" for="z_lift_height">Z lift height [<em>mm</em>]:</label>
+			<input type ="number" class="inputs" id="z_lift_height" value="10"/>
+
+			<label class="field printing" for="speed">Travel speed [<em>mm/min</em>]:</label>
+			<input type ="number" class="inputs" id="speed" value="3000"/>
+
+			<label class="field printing" for="e_speed">Extrusion speed [<em>mm/min</em>]:</label>
+			<input type ="number" class="inputs" id="e_speed" value="120"/>
+
+			<label class="field printing" for="z_lift_speed">Z lift speed [<em>mm/min</em>]:</label>
+			<input type ="number" class="inputs" id="z_lift_speed" value="300"/>
+
+		</form>
+	</div>
+
+	<script type="text/javascript" src="./js/globals.js"></script>
+	<script type="text/javascript" src="./js/twocolors.js"></script>
+	<script type="text/javascript" src="./js/gcode.js"></script>
+
+	</body>
+</html>
