@@ -11,16 +11,16 @@
 	  	<div id="params">
 		<form>
 			<label class="field design" for="row_num">Number of rows [<em>#</em>]:</label>
-			<input type ="number" class="inputs" id="row_num" value="3"/>
+			<input type ="number" class="inputs" id="row_num" value="9"/>
 
 			<label class="field design" for="column_num">Number of columns [<em>#</em>]:</label>
-			<input type ="number" class="inputs" id="column_num" value="3"/>
+			<input type ="number" class="inputs" id="column_num" value="9"/>
 
 			<label class="field design" for="spacing">Spacing [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="spacing" value="10"/>
 
 			<label class="field design" for="droplet_mm">Droplet size [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="droplet_mm" value="0.07"/>
+			<input type ="number" class="inputs" id="droplet_mm" value="0.05"/>
 
 			<button id="gcode" type="button" onclick="create_file();">PRINT</button>
 			
@@ -39,7 +39,7 @@
 
 			<label class= field printing">LIQUID #B</label>
 			<label class="field printing" for="load_b_x">Liquid X: [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="load_b_x" value="0"/>
+			<input type ="number" class="inputs" id="load_b_x" value="-45"/>
 
 			<label class="field printing" for="load_b_y">Liquid Y: [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="load_b_y" value="-75"/>
@@ -52,7 +52,7 @@
 
 			<label class= field printing">PURGE</label>
 			<label class="field printing" for="purge_x">Liquid X: [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="purge_x" value="45"/>
+			<input type ="number" class="inputs" id="purge_x" value="0"/>
 
 			<label class="field printing" for="purge_y">Liquid Y: [<em>mm</em>]:</label>
 			<input type ="number" class="inputs" id="purge_y" value="-75"/>
@@ -64,10 +64,10 @@
 			<input type ="number" class="inputs" id="purge_dip" value="3"/>
 
 			<label class="field printing" for="purge_length">Length: [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="purge_length" value="3"/>
+			<input type ="number" class="inputs" id="purge_length" value="1.5"/>
 
 			<label class="field printing" for="purge_cycles">Cycles: [<em>mm</em>]:</label>
-			<input type ="number" class="inputs" id="purge_cycles" value="3"/>
+			<input type ="number" class="inputs" id="purge_cycles" value="2"/>
 
 			<br>
 
@@ -82,7 +82,7 @@
 			<input type ="number" class="inputs" id="speed" value="10000"/>
 
 			<label class="field printing" for="e_speed">Extrusion speed [<em>mm/min</em>]:</label>
-			<input type ="number" class="inputs" id="e_speed" value="60"/>
+			<input type ="number" class="inputs" id="e_speed" value="70"/>
 
 			<label class="field printing" for="z_lift_speed">Z lift speed [<em>mm/min</em>]:</label>
 			<input type ="number" class="inputs" id="z_lift_speed" value="500"/>

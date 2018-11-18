@@ -13,53 +13,75 @@ function handle_liquid(liquid, load) {
 
 	if(load) {
 		// Load liquid
-		loading_length = design_params.droplet_size * (design_params.row_num*design_params.column_num/2) + 1;  	// Three is a super random extra loaded liquid just in case
+		loading_length = design_params.droplet_size * (design_params.row_num*design_params.column_num/2) + 2;  	// Three is a super random extra loaded liquid just in case
 		
 		gc += "G92 E"+ Math.round(loading_length*100)/100 +"\n";
 		// Retract load liquid
 		gc += "G1 E0 F"+ printing_params.e_speed + "\n";
-		gc += "G4 P3000 \n";
+		gc += "G4 P1000 \n";
 
-		gc += "G1 E0.5 F"+ printing_params.e_speed + "\n";
+		gc += "G1 E1 F"+ printing_params.e_speed + "\n";
 		gc += "G92 E0 \n";
 		gc += "G4 P3000 \n";
+
+		// Undip nozzle
+		gc += "G1 Z"+ liquid.z + " F"+ printing_params.speed + "\n";	
+
 
 	} else {
 		// Unload liquid
 		gc += "G92 E0 \n";
-		loading_length = 0.5;//design_params.droplet_size * (design_params.row_num*design_params.column_num/2);  	// Three is a super random extra loaded liquid just in case
+		loading_length = 2;//design_params.droplet_size * (design_params.row_num*design_params.column_num/2);  	// Three is a super random extra loaded liquid just in case
 		// Retract load liquid
-		gc += "G1 E" + Math.round(loading_length*100)/100 + " F"+ printing_params.e_speed + "\n";		
+		gc += "G1 Z"+ liquid.z +  " E" + Math.round(loading_length*100)/100 + " F"+ 8*printing_params.e_speed + "\n";		
 	}
 	
-
-	// Undip nozzle
-	gc += "G1 Z"+ liquid.z + " F"+ printing_params.speed + "\n";	
-
 	return gc;
 }
 
 function purge() {
 	var gc = [];
 
+	// Over purge bucket
 	gc += "G1 X" + printing_params.purge.x + " Y" + printing_params.purge.y + " Z" + printing_params.purge.z + " F"+ printing_params.speed+ "\n";
 
-	//Dip
-	gc += "G1 Z" + printing_params.purge.dip + " F"+ printing_params.speed+ "\n";
 
 	for (var i = 0; i < printing_params.purge.cycles; i++) {
+
 		gc += "G92 E0 \n";
+
+		// Load air
 		gc += "G1 E-" + Math.round(printing_params.purge.length*100)/100 + " F"+ printing_params.e_speed + "\n";	
-		gc += "G4 P500 \n";
-		gc += "G1 E0 F"+ printing_params.e_speed + "\n";
-		gc += "G4 P500 \n";
+
+		//Dip
+		gc += "G1 Z" + printing_params.purge.dip + " F"+ printing_params.speed+ "\n";
+		// Load air
+		gc += "G1 E-" + 2*Math.round(printing_params.purge.length*100)/100 + " F"+ printing_params.e_speed + "\n";	
+		gc += "G1 E-" + Math.round(printing_params.purge.length*100)/100 + " F"+ printing_params.e_speed + "\n";
+
+		//Blow air in purge
+		gc += "G1 Z" + printing_params.purge.z +  " E" + Math.round(printing_params.purge.length*100)/100 + " F"+ 8*printing_params.e_speed + "\n";
+
 	}
+
+	// Over purge bucket
+	gc += "G1 X" + printing_params.purge.x + " Y" + printing_params.purge.y + " Z" + printing_params.purge.z + " F"+ printing_params.speed+ "\n";
+
+	// Reset extruder position
+	gc += "G92 E0 \n";
+
+	//Recover lost mm while purging
+	gc += "G1 E-" + 3*Math.round(printing_params.purge.length*100)/100 + " F"+ printing_params.e_speed + "\n";
+
+	// Reset extruder position
+	gc += "G92 E0 \n";
+
 	return gc;
 }
 
 function printing_color(color) {
 
-	let extrusion = design_params.droplet_size; // First droplet double side
+	let extrusion = 0; // First droplet double side
 	var gc = [];
 
 	gc += "G92 E0 \n";
@@ -67,14 +89,16 @@ function printing_color(color) {
 	for (var i = 0; i < color.length; i++) {
 		// Got to droplet point
 		gc += "G1 X"+ color[i].x + 
-		" Y"+ color[i].y + 
-		" F"+ printing_params.speed+ "\n";
+				" Y"+ color[i].y + 
+				" F"+ printing_params.speed + "\n";
 
 		gc += "G1 Z" + printing_params.initial_height + " F"+ printing_params.z_lift_speed + "\n";
+
 		// Extrude
 		extrusion += design_params.droplet_size;
 
 		gc += "G1 E" + Math.round(extrusion*100)/100 +" F"+ printing_params.e_speed + "\n";
+		gc += "G4 P250 \n";
 		
 		// Z lift
 		gc += "G1 Z" + printing_params.z_lift_height 
@@ -124,8 +148,11 @@ function build_gcode(){
 
 
 	// End gcode homing printer
+	gcode += "G1 X0 Y0 Z100 F5000 \n";
 	gcode += "G28 \n";
-	
+	gcode += "M84 \n";
+
+
 	return gcode;
 }
 
@@ -133,7 +160,7 @@ function build_gcode(){
 function create_file(){
   var output = get_parameters();
   output += build_gcode();
-  //console.log(output);
+  console.log(output);
   var GCodeFile = new Blob([output], {type: 'text/plain'});
   saveAs(GCodeFile, "twocolors" + '.gcode');
 }
