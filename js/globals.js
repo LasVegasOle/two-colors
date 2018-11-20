@@ -80,20 +80,49 @@ let printing_params = {
 
 function init_globals(){
 
-// Handling events
-// Parameters Events handler
-document.getElementById('params').addEventListener('change', eventChangeHandler);
-function eventChangeHandler(e) {
-  if (e.target !== e.currentTarget) {
-    var item = e.target.id;
-    design_params.update();
-    printing_params.update();
+  // Handling events
+  // Update values and drawing every time an input changes
+  document.getElementById('params').addEventListener('change', eventChangeHandler);
+
+  function eventChangeHandler(e) {
+
+    if (e.target !== e.currentTarget) {
+
+        var item = e.target.id;
+        design_params.update();
+        printing_params.update();
+        two_colors_matrix();
+        drawing_matrix();
+
+      }
+      e.stopPropagation();
+  }
+
+  document.getElementById('config_collapsable').addEventListener('click', eventClick);
+
+  function eventClick(e) {
+
+    if (e.target !== e.currentTarget) {
+
+      if (printing.style.display === "block") {
+
+        printing.style.display = "none";
+
+      } else {
+
+        printing.style.display = "block";
+
+      }
 
     }
-    e.stopPropagation();
-  }
+
+      e.stopPropagation();
+  
+  }  
 
   design_params.update();
   printing_params.update();
+  two_colors_matrix();
+  drawing_matrix();
 
 }

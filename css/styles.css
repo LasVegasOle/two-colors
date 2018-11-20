@@ -35,3 +35,8 @@ button:hover {
 	color: darkblue;
 	background-color: white;
 }
+
+.printing {
+    display: none;
+    overflow: hidden;
+}
