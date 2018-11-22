@@ -108,6 +108,30 @@ function printing_color(color) {
 	return gc;
 }
 
+function dragging() {
+
+	let gc = [];
+
+	for (var i = 0; i < colors.drag.length; i++) {
+
+		// Go on top of first point
+		gc += "G1 X" + colors.drag[i].x + " Y" + colors.drag[i].y + " Z" + printing_params.z_lift_height + " F" + printing_params.speed + " \n";
+
+		// Lower
+		gc += "G1 Z" + printing_params.initial_height + " F" + printing_params.z_lift_speed + " \n";
+
+		// Drag
+		gc += "G1 X" + colors.drag[i].xx + " Y" + colors.drag[i].yy  + " \n";
+
+		// Raise
+		gc += "G1 Z" + printing_params.z_lift_height + " F" + printing_params.z_lift_speed + " \n";
+
+	}
+
+	return gc;
+
+}
+
 function build_gcode(){
 
 	two_colors_matrix();
@@ -145,6 +169,10 @@ function build_gcode(){
 	gcode += handle_liquid(printing_params.liquid.B, false);
 
 	gcode += purge();
+
+	// Dragging
+	gcode += "; DRAGGING \n";
+	gcode += dragging();
 
 
 	// End gcode homing printer

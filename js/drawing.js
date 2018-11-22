@@ -53,10 +53,10 @@ function drawing_matrix() {
 	draw_color_circle(colors.B, "yellow");
 	//draw_line(0, 0, 100, 100, "red");
 
-	console.log("drag length = " + colors.drag.length);
+	//console.log("drag length = " + colors.drag.length);
 	for(var i = 0; i < colors.drag.length; i++) {
 
-		console.log("i = " +i);
+		//console.log("i = " +i);
 		draw_line(colors.drag[i].x, colors.drag[i].y, colors.drag[i].xx, colors.drag[i].yy, "lightgreen");
 
 	}

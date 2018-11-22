@@ -47,20 +47,20 @@ function random_drag() {
 
 	let drag_num = Math.floor(Math.random() * (design_params.row_num + design_params.column_num - 1)) ;
 	
-	console.log("Colors length = " +colors.A.length + ", Drag num = " + drag_num);
+	//console.log("Colors length = " +colors.A.length + ", Drag num = " + drag_num);
 	
 	let xmin = colors.A[0].x;
 	let xmax = colors.A[0].x + design_params.spacing * (design_params.row_num-1);
 	let ymin = colors.A[0].y; 
 	let ymax = colors.A[0].y + design_params.spacing * (design_params.column_num-1); 
 
-	console.log("xmin = " + xmin + "xmax = " + xmax + "ymin = " + ymin + "ymax = " + ymax)
+	//console.log("xmin = " + xmin + "xmax = " + xmax + "ymin = " + ymin + "ymax = " + ymax)
 
 	// Add rando drags
 	for (var i = 0; i < drag_num; i ++) {
 
 		let drop_to_drag = Math.floor(Math.random() * ((design_params.row_num * design_params.column_num)/2 - 1));
-		console.log("drop_to_drag = " + drop_to_drag);
+		//console.log("drop_to_drag = " + drop_to_drag);
 		// get neighbors
 
 		let direction_to_drag = Math.floor(Math.random() * 4); // 4 = direction, up, dwon, right and left
