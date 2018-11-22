@@ -42,6 +42,79 @@ function two_colors_matrix() {
 
 }
 
+function random_drag() {
+	colors.drag = [];
+
+	let drag_num = Math.floor(Math.random() * (design_params.row_num + design_params.column_num - 1)) ;
+	
+	console.log("Colors length = " +colors.A.length + ", Drag num = " + drag_num);
+	
+	let xmin = colors.A[0].x;
+	let xmax = colors.A[0].x + design_params.spacing * (design_params.row_num-1);
+	let ymin = colors.A[0].y; 
+	let ymax = colors.A[0].y + design_params.spacing * (design_params.column_num-1); 
+
+	console.log("xmin = " + xmin + "xmax = " + xmax + "ymin = " + ymin + "ymax = " + ymax)
+
+	// Add rando drags
+	for (var i = 0; i < drag_num; i ++) {
+
+		let drop_to_drag = Math.floor(Math.random() * ((design_params.row_num * design_params.column_num)/2 - 1));
+		console.log("drop_to_drag = " + drop_to_drag);
+		// get neighbors
+
+		let direction_to_drag = Math.floor(Math.random() * 4); // 4 = direction, up, dwon, right and left
+		
+		let xx, yy;
+
+
+		if (direction_to_drag == 1) { // up
+
+			xx = colors.A[drop_to_drag].x;
+			yy = colors.A[drop_to_drag].y - design_params.spacing;
+			if (yy < ymin) {
+				direction_to_drag++;
+				yy = colors.A[drop_to_drag].y;
+			}
+
+		} else if (direction_to_drag == 2) { // down
+
+			xx = colors.A[drop_to_drag].x;
+			yy = colors.A[drop_to_drag].y + design_params.spacing;
+			if (yy > ymax) {
+				direction_to_drag++;
+				yy = colors.A[drop_to_drag].y;
+			}
+
+		} else if (direction_to_drag == 3) { // left
+
+			xx = colors.A[drop_to_drag].x - design_params.spacing;
+			yy = colors.A[drop_to_drag].y;
+
+			if (xx < xmin) {
+				direction_to_drag++;
+				xx = colors.A[drop_to_drag].x;
+			}
+
+
+		} else { // right
+
+			xx = colors.A[drop_to_drag].x + design_params.spacing;
+			yy = colors.A[drop_to_drag].y;
+
+			if (xx > xmax) {
+				xx = colors.A[drop_to_drag].x - design_params.spacing;
+			}
+
+		}
+
+		colors.drag.push({x: colors.A[drop_to_drag].x, y: colors.A[drop_to_drag].y, xx: xx, yy: yy});
+		// Add drag to colors, x/y to xx/yy
+
+	}
+
+}
+
 function total_extrusion_length() {
 	printing_params.liquid.A.length = design_params.row_num * 
 									design_params.column_num *

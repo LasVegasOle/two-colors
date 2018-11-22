@@ -3,7 +3,8 @@
 // Shapes center point
 let colors = {
   A: [],
-  B: []
+  B: [],
+  drag:[]
 };
 
 // Input params
@@ -92,6 +93,7 @@ function init_globals(){
         design_params.update();
         printing_params.update();
         two_colors_matrix();
+        random_drag();
         drawing_matrix();
 
       }
@@ -101,28 +103,34 @@ function init_globals(){
   document.getElementById('config_collapsable').addEventListener('click', eventClick);
 
   function eventClick(e) {
-
+    alert("Clicked");
     if (e.target !== e.currentTarget) {
 
-      if (printing.style.display === "block") {
+      let item = document.getElementByClass('printing');
+      for (var i = 0; i >= item.length; i++) {
+        
 
-        printing.style.display = "none";
+        if (item[i].style.display === "block") {
 
-      } else {
+          item[i].style.display = "none";
 
-        printing.style.display = "block";
+        } else {
+
+          item[i].style.display = "block";
+
+        }
 
       }
 
-    }
-
       e.stopPropagation();
   
-  }  
+    } 
 
+  }
   design_params.update();
   printing_params.update();
   two_colors_matrix();
+  random_drag();
   drawing_matrix();
 
 }
