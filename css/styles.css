@@ -43,6 +43,6 @@ button:hover {
 }
 
 .printing {
-    display: none;
+    display: block;
     overflow: hidden;
 }

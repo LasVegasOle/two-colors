@@ -36,6 +36,9 @@ function handle_liquid(liquid, load) {
 		gc += "G1 Z"+ liquid.z +  " E" + Math.round(loading_length*100)/100 + " F"+ 8*printing_params.e_speed + "\n";		
 	}
 	
+	// Move away from bucket to avoid spills 
+	gc += "G1 X0 Y0 F" + printing_params.speed + " \n";
+
 	return gc;
 }
 
@@ -76,6 +79,9 @@ function purge() {
 	// Reset extruder position
 	gc += "G92 E0 \n";
 
+	// Move away from bucket to avoid spills 
+	gc += "G1 X0 Y0 F" + printing_params.speed + " \n";
+
 	return gc;
 }
 
@@ -92,7 +98,7 @@ function printing_color(color) {
 				" Y"+ color[i].y + 
 				" F"+ printing_params.speed + "\n";
 
-		gc += "G1 Z" + printing_params.initial_height + " F"+ printing_params.z_lift_speed + "\n";
+		gc += "G1 Z" + printing_params.initial_height + " F"+ printing_params.speed + "\n";
 
 		// Extrude
 		extrusion += design_params.droplet_size;
@@ -174,6 +180,7 @@ function build_gcode(){
 	gcode += "; DRAGGING \n";
 	gcode += dragging();
 
+	gcode += purge();
 
 	// End gcode homing printer
 	gcode += "G1 X0 Y0 Z100 F5000 \n";
