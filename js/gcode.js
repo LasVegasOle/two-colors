@@ -176,9 +176,11 @@ function build_gcode(){
 
 	gcode += purge();
 
-	// Dragging
-	gcode += "; DRAGGING \n";
-	gcode += dragging();
+	if(design_params.drag_status) {
+		// Dragging
+		gcode += "; DRAGGING \n";
+		gcode += dragging();
+	}
 
 	gcode += purge();
 
@@ -206,6 +208,7 @@ var params = [];
   params += "; Number of rows [#]: " + document.getElementById("row_num").value + "\n";
   params += "; Number of columns [#]: " + document.getElementById("column_num").value + "\n";
   params += "; Spacing [mm]: " + document.getElementById("spacing").value + "\n";
+  params += "; Drag enabled[x]: " + document.getElementById("drag_status").checked + "\n";
 
   params += "; Load #A X [mm]: " + document.getElementById("load_a_x").value + "\n";
   params += "; Load #A Y [mm]: " + document.getElementById("load_a_y").value + "\n";

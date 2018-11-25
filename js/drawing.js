@@ -18,6 +18,7 @@ function draw_point(x, y, color) {
 	ctx.arc(c.width/2 + x, c.height/2 + y , 5, 0, 2 * Math.PI);
 	ctx.fillStyle = color;
 	ctx.fill();
+	ctx.lineWidth = 9;
 	ctx.strokeStyle = color;
 	ctx.stroke();
 
@@ -37,7 +38,7 @@ function draw_line(x,y,xx,yy,color) {
 	
 	ctx.fillStyle = color;
 	ctx.fill();
-	ctx.lineWidth=10;
+	ctx.lineWidth = 9;
 	ctx.strokeStyle = color;
 	ctx.stroke();
 
@@ -53,12 +54,14 @@ function drawing_matrix() {
 	draw_color_circle(colors.B, "yellow");
 	//draw_line(0, 0, 100, 100, "red");
 
-	//console.log("drag length = " + colors.drag.length);
-	for(var i = 0; i < colors.drag.length; i++) {
+	if (design_params.drag_status) {
+		//console.log("drag length = " + colors.drag.length);
+		for(var i = 0; i < colors.drag.length; i++) {
 
-		//console.log("i = " +i);
-		draw_line(colors.drag[i].x, colors.drag[i].y, colors.drag[i].xx, colors.drag[i].yy, "lightgreen");
+			//console.log("i = " +i);
+			draw_line(colors.drag[i].x, colors.drag[i].y, colors.drag[i].xx, colors.drag[i].yy, "lightgreen");
 
+		}
 	}
 
 }

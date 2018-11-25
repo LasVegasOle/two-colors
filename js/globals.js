@@ -14,11 +14,13 @@ let design_params = {
   column_num: 0,
   spacing: 0,
   droplet_size: 0,
+  drag_status: 0,
   'update': function () {
     this.row_num = parseInt(document.getElementById("row_num").value);
     this.column_num = parseInt(document.getElementById("column_num").value);
     this.spacing = parseInt(document.getElementById("spacing").value);
     this.droplet_size = parseFloat(document.getElementById("droplet_mm").value);
+    this.drag_status = document.getElementById("drag_status").checked;
   }
 }
 
@@ -93,7 +95,9 @@ function init_globals(){
         design_params.update();
         printing_params.update();
         two_colors_matrix();
-        random_drag();
+        if(design_params.drag_status) {
+          random_drag();
+        }
         drawing_matrix();
 
       }
